@@ -63,7 +63,20 @@ requirements.txt文件格式可以参考下面的内容：
          $ docker run -it -p 5000:5000 py3dtiles python setup.py install
 
 
-测试结果有待验证（由于网速问题卡在最后一步）: 2021 / 11 / 2
+在运行前的建议:
+
+将本地pip源改为国内镜像
+
+修改方法：
+
+定位到~/.pip/pip.conf，没有就创建，然后写入以下语句
+
+    .. code-block:: shell
+           
+           [global]
+           timeout = 6000
+           index-url = http://mirrors.aliyun.com/pypi/simple/
+           trusted-host = mirrors.aliyun.com
 
 
 Usage
