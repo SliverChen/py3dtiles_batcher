@@ -6,6 +6,10 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 
 在原有的基础上添加了一些操作
 
+首先说明一下，由于docker在windows环境下的搭建比较麻烦
+
+为了更快解决问题，我们使用Linux环境：Ubuntu-18.04.6
+
 
 
 Installation
