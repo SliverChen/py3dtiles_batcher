@@ -1,36 +1,69 @@
 py3dtiles_merger
 ================
-
-    **Disclaimer:**
-
-    This project is under active development and has been created to generate data as fast as possible at Jakarto (rush time). It doesn't cover either unit test, well-written documentation, or a sufficient level of abstraction to be used in different contexts. However, I will be more than happy to remove this disclaimer when improvements will be done. Feel free to open an issue to help the project.
-
-Convert `.las` files to `3dtiles` in batch using `py3dtiles <https://github.com/Oslandia/py3dtiles>`_.
-
-You can then easily visualize your supersized `.las` files on the Internet thanks to 3d viewers like `Cesium <https://github.com/AnalyticalGraphicsInc/cesium>`_ or `Itowns <https://github.com/iTowns/itowns>`_.
+Forked from https://github.com/Tofull/py3dtiles_batcher
 
 
-Requirements
+
+在原有的基础上添加了一些操作
+
+
+
+Installation
 #############
-
-This project needs a docker image of py3dtiles. Please follow the instructions :
 
     .. code-block:: shell
 
         $ git clone https://github.com/Tofull/py3dtiles
         $ cd py3dtiles
-        $ docker build -t py3dtiles .
+        $ vim Dockerfile #在根目录新建一个Dockerfile文件.
 
-Installation
-#############
 
-- Local installation *(recommanded until the project support pypi integration)*
+Dockerfile文件格式可以参考下面的内容（仅供参考）：
 
     .. code-block:: shell
+    
+         FROM python:3.7
+         WORKDIR /usr/src/app
+         COPY requirements.txt ./
+    
+         RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list \
+            && sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list \
+            && sed -i "s/security.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list \
+            && sed -i "s/httpredir.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list \
+            && pip install -U pip \
+            && pip config set global.index-url http://mirrors.aliyun.com/pypi/simple \
+            && pip config set install.trusted-host mirrors.aliyun.com
+    
+         RUN pip install --no-cache-dir -r requirements.txt
+    
+         COPY . .
+         ENTRYPOINT ["python"]
+         CMD ["./setup.py","install"]
+    
+    
+需要注意的是，如果你的numpy版本是>1.21的话需要移除并在requirements.txt限制numpy版本在[1.7,1.21)之间。
 
-        $ git clone https://github.com/Tofull/py3dtiles_batcher
-        $ cd py3dtiles_batcher
-        $ pip install .
+原因在于后续安装的numba库对numpy存在版本依赖
+
+requirements.txt文件格式可以参考下面的内容：
+
+
+      .. code-block:: shell
+      
+            numpy==1.20.3
+            pyproj 
+
+
+然后克隆py3dtiles_batcher，并且运行docker镜像：
+
+   .. code-block:: shell
+   
+         $ git clone https://github.com/Tofull/py3dtiles_batcher.git
+         $ cd py3dtiles_batcher
+         $ docker run -it -p 5000:5000 py3dtiles python setup.py install
+
+
+测试结果有待验证（由于网速问题卡在最后一步）: 2021 / 11 / 2
 
 
 Usage
