@@ -68,7 +68,7 @@ requirements.txt文件格式可以参考下面的内容：
    
          $ git clone https://github.com/Tofull/py3dtiles_batcher.git
          $ cd py3dtiles_batcher
-         $ docker run -it -p 5000:5000 py3dtiles python setup.py install
+         $ docker run -it -p 5000:5000 py3dtiles setup.py install
 
 
 在运行前的建议:
