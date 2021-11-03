@@ -6,9 +6,11 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 
 在原有的基础上添加了一些操作
 
-首先说明一下，由于docker在windows环境下的搭建比较麻烦
+实验环境配置说明：
 
-为了更快解决问题，我们使用Linux环境：Ubuntu-18.04.6
+- Windows10 家庭版
+
+- Docker Toolbox 19.03.1（下载链接：https://get.daocloud.io/toolbox/）
 
 
 
