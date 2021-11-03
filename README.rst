@@ -7,11 +7,13 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 在原有的基础上添加了一些操作
 
 实验环境配置说明：
+#############
 
-- Windows10 家庭版
+- Windows10 家庭版（如果支持Hyper-V，可以直接下载Docker for windows）
+（Docker for windows下载链接：http://get.daocloud.io/#install-docker-for-mac-windows）
 
 - Docker Toolbox 19.03.1（下载链接：https://get.daocloud.io/toolbox/）
-
+配置教程：https://blog.csdn.net/weixin_44038167/article/details/109485148
 
 
 Installation
