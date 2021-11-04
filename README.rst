@@ -87,6 +87,9 @@ requirements.txt文件格式可以参考下面的内容：
            trusted-host = mirrors.aliyun.com
 
 
+最终生成的exe文件在Python根目录下的scripts目录中
+
+
 Usage
 ###########
 
