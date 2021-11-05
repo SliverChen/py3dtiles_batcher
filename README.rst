@@ -111,7 +111,7 @@ Installation (In py3dtiles_batcher)
 
 也就是说如果运行的环境发生了改变，那么就会出现Fatal error in launcher: Unable to create process using xxxx/xx/python.exe的错误
 
-要是想在其他主机下运行这个程序，需要保证它所记录的路径下有python.exe（只需要新建并且把python.exe拷贝过去就可以了）
+要是想在其他主机下运行这个程序，可能需要重新构建并安装（目前没有找到更好的办法）
 
 
 Usage
