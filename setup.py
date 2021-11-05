@@ -7,7 +7,7 @@ import py3dtiles_batcher
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-with open('README.rst') as f:
+with open('README.rst',encoding="UTF-8") as f:
     long_description = f.read()
 
 setup(
