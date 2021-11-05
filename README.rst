@@ -19,12 +19,14 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 Installation
 #############
 
+
     .. code-block:: shell
 
         $ git clone https://github.com/Tofull/py3dtiles
         $ cd py3dtiles
-        $ vim Dockerfile #在根目录新建一个Dockerfile文件.
 
+
+需要注意：使用docker build的时候需要存在一个Dockerfile文件
 
 Dockerfile文件格式可以参考下面的内容（仅供参考）：
 
@@ -49,7 +51,7 @@ Dockerfile文件格式可以参考下面的内容（仅供参考）：
          CMD ["./setup.py","install"]
     
     
-需要注意的是，如果你的numpy版本是>1.21的话需要移除并在requirements.txt限制numpy版本在[1.7,1.21)之间。
+同时，如果你的numpy版本是>1.21的话需要移除并在requirements.txt限制numpy版本在[1.7,1.21)之间。
 
 原因在于后续安装的numba库对numpy存在版本依赖
 
@@ -60,6 +62,14 @@ requirements.txt文件格式可以参考下面的内容：
       
             numpy==1.20.3
             pyproj 
+
+
+执行镜像构建(注意后面的点)：
+
+
+    .. code-block:: shell
+    
+        $ docker build -t py3dtiles .
 
 
 然后克隆py3dtiles_batcher，并且运行docker镜像：
