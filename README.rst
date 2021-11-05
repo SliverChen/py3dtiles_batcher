@@ -15,6 +15,7 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 - Docker Toolbox 19.03.1（下载链接：https://get.daocloud.io/toolbox/）
 配置教程：https://blog.csdn.net/weixin_44038167/article/details/109485148
 
+- Python 3.7 (3.10存在不兼容的现象)
 
 Installation (In py3dtiles)
 #############
