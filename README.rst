@@ -82,6 +82,7 @@ requirements.txt文件格式可以参考下面的内容：
 
 
 在运行前的建议:
+#################
 
 将本地pip源改为国内镜像
 
@@ -98,6 +99,15 @@ requirements.txt文件格式可以参考下面的内容：
 
 
 最终生成的exe文件在Python根目录下的scripts目录中
+
+再补充一点：
+################
+
+生成的.exe文件在构建的过程中同时记录了Python的根目录位置，执行这个应用程序时会首先寻找记录的Python根目录位置再通过根目录下的python.exe执行这个程序
+
+也就是说如果运行的环境发生了改变，那么就会出现Fatal error in launcher: Unable to create process using xxxx/xx/python.exe的错误
+
+要是想在其他主机下运行这个程序，需要保证它所记录的路径下有python.exe（只需要新建并且把python.exe拷贝过去就可以了）
 
 
 Usage
