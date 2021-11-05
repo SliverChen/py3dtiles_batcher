@@ -16,7 +16,7 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 配置教程：https://blog.csdn.net/weixin_44038167/article/details/109485148
 
 
-Installation
+Installation (In py3dtiles)
 #############
 
 
@@ -72,7 +72,10 @@ requirements.txt文件格式可以参考下面的内容：
         $ docker build -t py3dtiles .
 
 
-然后克隆py3dtiles_batcher，并且运行docker镜像：
+Installation (In py3dtiles_batcher)
+#############
+
+克隆py3dtiles_batcher，并且运行docker镜像：
 
    .. code-block:: shell
    
