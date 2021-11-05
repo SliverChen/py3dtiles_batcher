@@ -11,7 +11,6 @@ RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list \
    && pip config set install.trusted-host mirrors.aliyun.com
 
 RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
 ENTRYPOINT ["python"]
 CMD ["./setup.py","install"]
