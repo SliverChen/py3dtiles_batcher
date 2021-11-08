@@ -102,6 +102,13 @@ Installation (In py3dtiles_batcher)
            trusted-host = mirrors.aliyun.com
 
 
+EXE生成：
+##################
+
+    .. code-block:: shell
+    
+        $ python setup.py install
+
 最终生成的exe文件在Python根目录下的scripts目录中
 
 再补充一点：
