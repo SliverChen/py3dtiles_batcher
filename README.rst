@@ -17,6 +17,32 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 
 - Python 3.7 (3.10存在不兼容的现象)
 
+
+
+文件修改(In py3dtiles_batcher)
+#############
+
+在后续执行py3dtiles_batcher.exe时会因为路径非法导致出现错误
+
+具体为 invalid mode: /data_in
+
+因为作者在编写py3dtiles_batcher中的command_line.py时路径后面默认跟上一个冒号":"，因此可能会出现xx/:/data_in的情况。所以先修改command_line.py中https://github.com/SliverChen/py3dtiles_batcher/blob/2c5ca8305af3acb0816e71207aa517362ee713b4/py3dtiles_batcher/command_line.py#L87
+
+    .. code-block:: shell
+    
+        commandline = 'docker run --init --rm -v {} -v {} {} py3dtiles convert --overwrite True --srs_in {} --srs_out {} --out \"/data_out/{}\" --cache_size {} \"/data_in/{}\" --rgb {}'.format(
+            path,
+            folder_tiles_path,
+            docker_image,
+            srs_in,
+            srs_out,
+            name_base64,
+            cache_size,
+            basename,
+            rgb)
+        
+
+
 Installation (In py3dtiles)
 #############
 
