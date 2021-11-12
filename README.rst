@@ -9,13 +9,11 @@ Forked from https://github.com/Tofull/py3dtiles_batcher
 实验环境配置说明：
 #############
 
-- Windows10 家庭版（如果支持Hyper-V，可以直接下载Docker for windows）
-（Docker for windows下载链接：http://get.daocloud.io/#install-docker-for-mac-windows）
-
-- Docker Toolbox 19.03.1（下载链接：https://get.daocloud.io/toolbox/）
-配置教程：https://blog.csdn.net/weixin_44038167/article/details/109485148
+- Ubuntu 18.4.6
 
 - Python 3.7 (3.10存在不兼容的现象)
+
+(使用Windows的兼容性不高：如果要用建议下载Docker for windows: https://get.daocloud.io/toolbox/)
 
 
 
@@ -55,30 +53,36 @@ Installation (In py3dtiles)
 
 需要注意：使用docker build的时候需要存在一个Dockerfile文件
 
-Dockerfile文件格式可以参考下面的内容（仅供参考）：
+相当于呈现一个从0到1的安装流程
+
+Dockerfile文件格式可以参考下面的内容：
+
+参考：https://github.com/vitlok-cyberhawk/py3dtiles-dockerised
 
     .. code-block:: shell
     
-         FROM python:3.7
-         WORKDIR /usr/src/app
-         COPY requirements.txt ./
+         FROM ubuntu:bionic
+
+         RUN apt-get update && apt-get install -y sl
+
+         RUN apt-get install -y git python3 python3-pip virtualenv libopenblas-base liblas-c3
+
+         RUN git clone https://github.com/Oslandia/py3dtiles
+
+         WORKDIR /py3dtiles
+
+         RUN virtualenv -p /usr/bin/python3 venv
+         RUN . venv/bin/activate
+         RUN /py3dtiles/venv/bin/pip install -e .
+         RUN /py3dtiles/venv/bin/python setup.py install
+         RUN ln -s /py3dtiles/venv/bin/py3dtiles /usr/local/bin
+
+         WORKDIR /3ddata
+
+         ENTRYPOINT [ "py3dtiles" ]
     
-         RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list \
-            && sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list \
-            && sed -i "s/security.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list \
-            && sed -i "s/httpredir.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list \
-            && pip install -U pip \
-            && pip config set global.index-url http://mirrors.aliyun.com/pypi/simple \
-            && pip config set install.trusted-host mirrors.aliyun.com
     
-         RUN pip install --no-cache-dir -r requirements.txt
-    
-         COPY . .
-         ENTRYPOINT ["python"]
-         CMD ["./setup.py","install"]
-    
-    
-同时，如果你的numpy版本是>1.21的话需要移除并在requirements.txt限制numpy版本在[1.7,1.21)之间。
+同时，需要在requirements.txt限制numpy版本在[1.7,1.21)之间。
 
 原因在于后续安装的numba库对numpy存在版本依赖
 
@@ -102,49 +106,29 @@ requirements.txt文件格式可以参考下面的内容：
 Installation (In py3dtiles_batcher)
 #############
 
-克隆py3dtiles_batcher，并且运行docker镜像：
+克隆py3dtiles_batcher，并且运行docker镜像来进行转换操作：
 
    .. code-block:: shell
    
          $ git clone https://github.com/Tofull/py3dtiles_batcher.git
          $ cd py3dtiles_batcher
-         $ docker run -it -p 5000:5000 py3dtiles setup.py install
+         $ docker run -it --rm -v "/path/libDIr":"/3ddata" py3dtiles convert data.las
 
 
-在运行前的建议:
+使用的注意事项:
 #################
 
-将本地pip源改为国内镜像
+由于py3dtiles中涉及到venv的使用，无法在共享文件夹中直接运行docker
 
-修改方法：
-
-定位到~/.pip/pip.conf，没有就创建，然后写入以下语句
-
-    .. code-block:: shell
-           
-           [global]
-           timeout = 6000
-           index-url = http://mirrors.aliyun.com/pypi/simple/
-           trusted-host = mirrors.aliyun.com
+如果想要转换windows下传来的文件，需要事先将文件复制一份到linux本地文件夹下再进行转换
 
 
-EXE生成：
-##################
-
-    .. code-block:: shell
-    
-        $ python setup.py install
-
-最终生成的exe文件在Python根目录下的scripts目录中
-
-再补充一点：
+可行性分析：
 ################
 
-生成的.exe文件在构建的过程中同时记录了Python的根目录位置，执行这个应用程序时会首先寻找记录的Python根目录位置再通过根目录下的python.exe执行这个程序
+由于docker构建比较麻烦，对于一台没有docker的主机而言移植性差。
 
-也就是说如果运行的环境发生了改变，那么就会出现Fatal error in launcher: Unable to create process using xxxx/xx/python.exe的错误
-
-要是想在其他主机下运行这个程序，可能需要重新构建并安装（目前没有找到更好的办法）
+最好的办法是在linux中将这个py3dtiles打包成独立的可执行程序，并且传到
 
 
 Usage
